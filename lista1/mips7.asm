@@ -1,39 +1,64 @@
 .text
 
 main:
-	addi $t0, $v0, 10 	#CARREGA O VALOR 10 NO REGISTRADOR T0
-	addi $t1, $v0, 100	#CARREGA O VALOR 100 NO REGISTRADOR T1
+	addi $t0, $v0, 10
+	addi $t1, $v0, 100
 	addi $t2, $v0, 1000
 
-	addi $v0, $zero, 5	#LÊ A ENTRADA DE UM NUMERO INTEIRO
+	addi $v0, $zero, 5
 	syscall
 	
-	add $t2, $v0, $zero	#CARREGA O VALOR LIDO NO REGISTRADOR T2
+	add $t3, $v0, $zero  #Sobrará o alg das unidades
 	
-	div $t2, $t1		#DIVIDE O VALOR LIDO, POR 100
-	mflo $t4		#GUARDA NO REGISTRADOR T4 A PARTE INTEIRA DA DIVISAO DO VALOR LIDO POR 100 (ALGARISMO DAS CENTENAS)
+	div $t3, $t2
+	mflo $s0 #Algarismo dos milhares
 	
-	mul $t6, $t4, $t1	#MULTIPLICA A PARTE INTEIRA DA DIVISAO POR 100, PARA ENCONTRAR O VALOR DA CENTENA E GUARDA O VALOR EM T6
-	sub $t2, $t2, $t6	#SUBTRAI O VALOR LIDO, POR SUA PARTE DAS CENTENAS, SOBRANDO O VALOR DAS DEZENAS + UNIDADES
+	mul $t4, $s0, $t2
+	sub $t3, $t3, $t4
 	
-	div $t2, $t0		#DIVIDE O VALOR LIDO, POR 10
-	mflo $t5		#GUARDA NO REGISTRADOR T4 A PARTE INTEIRA DA DIVISAO DO VALOR LIDO POR 10 (ALGARISMO DAS DEZENAS)
+	div $t3, $t1
+	mflo $s1 #Algarismo das centenas
 	
-	mul $t7, $t5, $t0	#MULTIPLICA A PARTE INTEIRA DA DIVISAO POR 10, PARA ENCONTRAR O VALOR DA CENTENA E GUARDA O VALOR EM T5
-	sub $t2, $t2, $t7	#SUBTRAI O VALOR LIDO, POR SUA PARTE DAS CENTENAS, SOBRANDO O VALOR DAS UNIDADES
+	mul $t4, $s1, $t1
+	sub $t3, $t3, $t4
 	
-				#T2 -> UNIDADE; T5 -> DEZENA; T4 -> CENTENA
-				
-	add $a0, $t4, $zero
+	div $t3, $t0
+	mflo $s2 #Algarismo das dezenas
+	
+	mul $t4, $s2, $t0
+	sub $t3, $t3, $t4
+	
+	add $a0, $t3, $zero
 	addi $v0, $zero, 1
 	syscall
-							
-	add $a0, $t5, $zero
-	addi $v0, $zero, 1
-	syscall
-		
-	add $a0, $t2, $zero
-	addi $v0, $zero, 1
-	syscall
-		
 	
+	addi $a0, $zero, '\n'
+	addi $v0, $zero, 11
+	syscall
+	
+	add $a0, $s2, $zero
+	addi $v0, $zero, 1
+	syscall	
+	
+	addi $a0, $zero, '\n'
+	addi $v0, $zero, 11
+	syscall
+	
+	add $a0, $s1, $zero
+	addi $v0, $zero, 1
+	syscall
+	
+	addi $a0, $zero, '\n'
+	addi $v0, $zero, 11
+	syscall
+	
+	add $a0, $s0, $zero
+	addi $v0, $zero, 1
+	syscall
+	
+	addi $a0, $zero, '\n'
+	addi $v0, $zero, 11
+	syscall
+	
+	addi $v0, $zero, 10
+	syscall
