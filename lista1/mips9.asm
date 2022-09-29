@@ -40,4 +40,7 @@ main:
 	add $a0, $zero, $s0
 	addi $v0, $zero, 1
 	syscall
+
+	addi $v0, $zero, 10
+	syscall
 	

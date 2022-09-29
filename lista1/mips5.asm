@@ -4,7 +4,7 @@ main:
 	addi $t0, $v0, 10 	#CARREGA O VALOR 10 NO REGISTRADOR T0
 	addi $t1, $v0, 100	#CARREGA O VALOR 100 NO REGISTRADOR T1
 
-	addi $v0, $zero, 5	#LÊ A ENTRADA DE UM NUMERO INTEIRO
+	addi $v0, $zero, 5	#Lï¿½ A ENTRADA DE UM NUMERO INTEIRO
 	syscall
 	
 	add $t2, $v0, $zero	#CARREGA O VALOR LIDO NO REGISTRADOR T2
@@ -36,3 +36,6 @@ main:
 	add $a0, $t4, $zero
 	addi $v0, $zero, 1
 	syscall	
+
+	addi $v0, $zero, 10
+	syscall
